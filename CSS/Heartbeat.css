@@ -1,0 +1,58 @@
+.fa-heart {
+  color: #d84535;
+  font-size: 240px;
+  line-height: 0px;
+  display: block;
+  text-align: center;
+
+  -moz-animation-duration: 3s;
+  -webkit-animation-duration: 2s;
+  -moz-animation-name: wave;
+  -webkit-animation-name: wave;
+  -moz-animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes wave {
+  from {
+    font-size: 35px;
+  }
+  10% {
+    font-size: 37px;
+  }
+  15% {
+    font-size: 35px;
+  }
+  20% {
+    font-size: 40px;
+  }
+  50% {
+    font-size: 35px;
+  }
+  to {
+    font-size: 35px;
+  }
+}
+
+@-webkit-keyframes wave {
+  from {
+    font-size: 35px;
+  }
+  10% {
+    font-size: 37px;
+  }
+  15% {
+    font-size: 35px;
+  }
+  20% {
+    font-size: 40px;
+  }
+  50% {
+    font-size: 35px;
+  }
+  to {
+    font-size: 35px;
+  }
+}
+
+/* https://codepen.io/patricklittle/pen/gOJdYw */

@@ -1,0 +1,271 @@
+@import url(Navbar.css);
+@import url(CircularProgress.css);
+@import url(Heartbeat.css);
+
+/* variables */
+:root {
+    --theme-color: #7DA2A9;
+    --theme-color-darker: #516f75;
+    --theme-color-lighter: #a0cdd6;
+    --white: #f9f9f9;
+    --black: #36383F;
+    --grey: #b4b4b4;
+    --progressbar: #008000;
+} 
+
+/* global */
+body {
+    margin: 0;
+    font-family: 'Montserrat';
+}
+
+h4 {
+    height: fit-content;
+    width: 220px;
+    padding: 16px 32px ;
+    color: var(--white);
+    background-color: var(--theme-color);
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    h4 {
+        width: auto;
+    }
+}
+
+canvas {
+    margin: 16px;
+}
+
+/* backgound */
+.background {
+    z-index: -1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: var(--white)
+}
+
+
+/* content */
+.container-vertical {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.container-horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-container {
+    width: 90%;
+    padding-top: 10px;
+}
+
+.card {
+    margin: 8px 2px;
+    
+    border-radius: 8px;
+    
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 8px;
+    border: 2px solid var(--theme-color);
+    transition: all 200ms ease;
+}
+
+.card p {
+    color: var(--black);
+    text-align: center;
+    padding: 0 8px;
+    margin: 0;
+
+    transition: all 200ms ease;
+}
+
+.card p:hover {
+    transform: scale(1.05);
+}
+
+.dashboard-card {
+    width: 32%;
+    height: 180px;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.02);
+}
+
+#time-card #now-day {
+    font-size: x-large;
+}
+
+#time-card #now-date {
+    font-size: medium;
+}
+
+#time-card #now-time {
+    font-size: large;
+}
+
+#weather-card i {
+    margin-right: 16px;
+}
+
+#weather-card #temperature {
+    font-size: x-large;
+}
+
+#weather-card #humidity {
+    font-size: x-large;
+}
+
+#weather-card #weather-commment {
+    font-size: medium
+}
+
+#sport-card #action-title {
+    font-size: x-large;
+}
+
+#sport-card #current-action {
+    font-size: x-large;
+}
+
+@media screen and (max-width: 600px) {
+    .dashboard-card {
+        width: 100%;
+    }
+}
+
+
+.history-card {
+    width: 100%;
+    height: fit-content;
+}
+
+.history-card:hover {
+    transform: scale(1.01);
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    
+    border-radius: inherit;
+}
+
+.statistics-card {
+    width: 49%;
+    height: 220px;
+}
+
+.statistics-card:hover {
+    transform: scale(1.01);
+}
+
+@media screen and (max-width: 600px) {
+    .statistics-card {
+        width: 100%;
+    }
+}
+
+/* Progress */
+#progress-container {
+    position: relative;
+    width: 120px;
+    height: 180px;
+    margin-left: 8%;
+}
+
+#progress-container #percent {
+    position: absolute;
+    top: 40px;
+    width: 120px;
+    height: 40px;
+    padding: 0;
+    font-size: x-large;
+    text-align: center;
+}
+#progress-container #progress-title {
+    font-size: larger;
+    text-align: center;
+    padding-top: 24px;
+}
+
+#progress-placer {
+    width: 120px;
+    height: 120px;
+    rotate: 90deg;
+}
+
+.progress .svg .bar {
+    stroke-dasharray: 360;
+    stroke-dashoffset: 72;
+}
+
+#progress-info {
+    height: 80%;
+    width: calc(80% - 120px);
+    margin-right: 4%;
+    
+}
+
+#progress-info p {
+    font-size: large;
+    padding: 0;
+}
+
+#progress-info #progress-comment {
+    font-size: medium;
+}
+
+/* Heart rate */
+#heartrate-container {
+    margin-left: 8%;
+    height: 80%;
+    width: 120px;
+}
+
+#heartrate-container i {
+    position: relative;
+    top: 48px;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
+}
+
+#heartrate-container #heartrate-number {
+    position: relative;
+    top: 96px;
+    color: #d84535;
+    font-size: xx-large;
+    font-weight: bold;
+    -moz-animation-duration: 3s;
+    -webkit-animation-duration: 2s;
+    -moz-animation-name: wave;
+    -webkit-animation-name: wave;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+
+#heartrate-info {
+    height: 80%;
+    width: calc(80% - 120px);
+    margin-right: 4%;
+}
+
+#heartrate-info #heartrate-intensity {
+    font-size: large;
+}
+
+#heartrate-info #heartrate-comment {
+    font-size: medium;
+}
