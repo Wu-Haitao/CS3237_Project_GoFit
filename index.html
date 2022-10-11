@@ -32,6 +32,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
     <div class="background"></div>
@@ -54,6 +59,7 @@
 
     <!-- Content -->
     <div class="container-vertical">
+      <!-- Dashboard -->
       <section class="section-container" id="Dashboard">
         <h4><i class="fa-solid fa-gauge"></i> Dashboard</h4>
         <div class="container-horizontal">
@@ -69,12 +75,13 @@
             <p><i class="wi wi-humidity"></i><span id="humidity"></span></p>
             <p id="weather-comment">Good weather?</p>
           </div>
-          <div class="card dashboard-card container-vertical" id="sport-card">
+          <div class="card dashboard-card container-vertical" id="action-card">
             <p id="action-title">Current Action:</p>
             <p id="current-action"></p>
           </div>
         </div>
       </section>
+      <!-- Statistics -->
       <section class="section-container" id="Statistics">
         <h4><i class="fa-solid fa-database"></i> Statistics</h4>
         <div class="container-horizontal">
@@ -83,7 +90,7 @@
             id="progress-card"
           >
             <div id="progress-container">
-              <p id="percent">80%</p>
+              <p id="percent"></p>
               <div id="progress-placer">
                 <div class="progress">
                   <svg
@@ -99,37 +106,39 @@
               <p id="progress-title">CAL</p>
             </div>
             <div id="progress-info" class="container-vertical">
-              <p id="progress-target">Target: <span>1200</span> Cal</p>
-              <p id="progress-current">Current: <span>600</span> Cal</p>
-              <p id="progress-comment">Keep going!</p>
+              <p id="progress-target">Target: <span></span> Cal</p>
+              <p id="progress-current">Current: <span></span> Cal</p>
+              <p id="progress-comment"></p>
             </div>
           </div>
-          <div class="card statistics-card heartbeat-container container-horizontal">
+          <div
+            class="card statistics-card heartbeat-container container-horizontal"
+          >
             <div id="heartrate-container">
               <i class="fa fa-heart"></i>
-              <p id="heartrate-number">120</p>
+              <p id="heartrate-number"></p>
             </div>
             <div id="heartrate-info" class="container-vertical">
-              <p id="heartrate-intensity">Intensity Level: <span>High</span></p>
-              <p id="heartrate-comment">Working-out strenuously</p>
+              <p id="heartrate-intensity">Intensity Level: <span></span></p>
+              <p id="heartrate-comment"></p>
             </div>
-              
           </div>
         </div>
       </section>
+      <!-- History -->
       <section class="section-container" id="History">
         <h4><i class="fa-solid fa-clock-rotate-left"></i> History</h4>
-        <div class="container-horizontal">
-          <div class="card history-card">
-            <div class="chart-container">
-              <canvas id="history-chart" width="400" height="400"></canvas>
-            </div>
+
+        <div class="card history-card">
+          <div class="chart-container">
+            <canvas id="history-chart" width="400" height="400"></canvas>
           </div>
         </div>
       </section>
     </div>
 
     <!-- Script -->
+    <script src=".\JS\MQTTManager.js"></script>
     <script src=".\JS\index.js"></script>
   </body>
 </html>

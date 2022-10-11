@@ -43,48 +43,48 @@ function RefreshDateTime() {
       now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()
     } ${now.getHours() <= 12 ? 'AM' : 'PM'} ${timeIcon}`
   );
-  // let cardClassName = `g${now.getHours()}`;
-  // for (let i = 0; i <= 23; i++) {
-  //   $('#time-card').removeClass(`g${i}`);
-  // }
-  // $('#time-card').addClass(cardClassName);
 }
 
-let temperature = 26;
-let humidity = 78;
-function RefreshWeather() {
+function RefreshWeather(temperature, humidity) {
   $('#temperature').text(`${temperature} °C`);
   $('#humidity').text(`${humidity} %`);
-
-  // let SetBackgroundColor = function (temp) {
-  //   const cardClassName = ['hot', 'warm', 'cool', 'cold'];
-  //   let weather_card = $('#weather-card');
-  //   cardClassName.forEach((c) => {
-  //     weather_card.removeClass(c);
-  //   });
-  //   if (temp >= 30) {
-  //     weather_card.addClass('hot');
-  //   } else if (temp >= 25) {
-  //     weather_card.addClass('warm');
-  //   } else if (temp >= 20) {
-  //     weather_card.addClass('cool');
-  //   } else {
-  //     weather_card.addClass('cold');
-  //   }
-  // };
-
-  // SetBackgroundColor(temperature);
 }
 
-let sportType = "Walking🚶‍♂️";
-function RefreshSport() {
-  $("#current-action").text(sportType);
+function RefreshAction(actionIndex) {
+  const actionNames = ['Standing 🧍‍♂️', 'Walking 🚶‍♂️', 'Running 🏃‍♂️'];
+  $('#current-action').text(actionNames[actionIndex]);
 }
 
-function RefreshDashboardCards() {
-  RefreshDateTime();
-  RefreshWeather();
-  RefreshSport();
+function RefreshProgress(target, current) {
+  let percentage = Math.round((current / target) * 100);
+  $('#percent').text(`${percentage}%`);
+  $('#progress-target span').text(target);
+  $('#progress-current span').text(current);
+  $('.progress .svg .bar').css(
+    'stroke-dashoffset',
+    Math.round(360 - 3.6 * percentage)
+  );
+  if (percentage < 75) {
+    $('#progress-comment').text('Keep going!');
+  } else if (percentage < 100) {
+    $('#progress-comment').text('Almost there!');
+  } else {
+    $('#progress-comment').text('Target reached!');
+  }
+}
+
+function RefreshHeartRate(heartRate) {
+  $('#heartrate-number').text(heartRate);
+  if (heartRate < 80) {
+    $('#heartrate-intensity span').text('Low');
+    $('#heartrate-comment').text('Relaxing~');
+  } else if (heartRate < 120) {
+    $('#heartrate-intensity span').text('Medium');
+    $('#heartrate-comment').text('Working-out moderately');
+  } else {
+    $('#heartrate-intensity span').text('High');
+    $('#heartrate-comment').text('Working-out strenuously');
+  }
 }
 
 function RefreshHistoryChart() {
@@ -112,8 +112,17 @@ function RefreshHistoryChart() {
 }
 
 $(document).ready(function () {
-  /* Navbar action */
   $('#nav-toggle').click(ToggleNavbar);
-  setInterval(RefreshDashboardCards, 1000);
+
+  RefreshDateTime();
+  setInterval(RefreshDateTime, 5000);
+  //Fake data
+  RefreshWeather(26, 78);
+  RefreshAction(1);
+  RefreshProgress(1600, 1200);
+  RefreshHeartRate(90);
+
   RefreshHistoryChart();
+
+  let mqttClient = SetupMQTT();
 });

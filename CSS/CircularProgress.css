@@ -16,7 +16,7 @@
 }
 
 .progress .svg .bar {
-    stroke: var(--progressbar);
+    stroke: #008000;
     stroke-dasharray: 999;
 }
 
