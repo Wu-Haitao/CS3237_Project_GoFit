@@ -49,3 +49,13 @@ function HandelMQTTMessage(message) {
   RefreshProgress(data.target, data.current);
   RefreshHeartRate(data.heartRate);
 }
+
+function SendRequest(client) {
+  client.publish(toTopic, '1', function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Request sent!');
+    }
+  });
+}

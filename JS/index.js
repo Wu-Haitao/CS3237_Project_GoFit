@@ -125,4 +125,5 @@ $(document).ready(function () {
   RefreshHistoryChart();
 
   let mqttClient = SetupMQTT();
+  setInterval(SendRequest, 10000, mqttClient);
 });
