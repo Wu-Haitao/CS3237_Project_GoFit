@@ -87,6 +87,10 @@ canvas {
   transition: all 200ms ease;
 }
 
+.card:hover {
+  transform: scale(1.01);
+}
+
 .card p {
   color: var(--black);
   text-align: center;
