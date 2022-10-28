@@ -51,7 +51,7 @@ function RefreshWeather(temperature, humidity) {
 }
 
 function RefreshAction(actionIndex) {
-  const actionNames = ['Standing 🧍‍♂️', 'Walking 🚶‍♂️', 'Running 🏃‍♂️'];
+  const actionNames = ['Sitting 🪑', 'Walking 🚶‍♂️', 'Running 🏃‍♂️'];
   $('#current-action').text(actionNames[actionIndex]);
 }
 
@@ -126,5 +126,5 @@ $(document).ready(function () {
 
   let mqttClient = SetupMQTT();
   SendRequest(mqttClient);
-  setInterval(SendRequest, 10000, mqttClient);
+  setInterval(SendRequest, 5000, mqttClient);
 });
