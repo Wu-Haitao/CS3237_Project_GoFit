@@ -1,144 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GoFit</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-      rel="stylesheet"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css"
-      rel="stylesheet"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link href=".\CSS\index.css" type="text/css" rel="stylesheet" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-  </head>
-  <body>
-    <div class="background"></div>
 
-    <!-- Navbar -->
-    <section class="navigation">
-      <div class="nav-container">
-        <div class="Logo">GoFit</div>
-        <a href="javascript:void(0);" class="nav-toggle" id="nav-toggle"
-          ><i class="fa fa-bars"></i
-        ></a>
-        <div class="nav-list">
-          <a href="#Dashboard">Dashboard</a>
-          <a href="#Statistics">Statistics</a>
-          <a href="#History">History</a>
-          <a href="/about.html">About</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoFit</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css" rel="stylesheet"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href=".\CSS\index.css" type="text/css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+  <!-- <div class="background"></div> -->
+
+  <!-- Navbar -->
+  <section class="navigation">
+    <div class="nav-container">
+      <div class="Logo">GoFit</div>
+      <a href="javascript:void(0);" class="nav-toggle" id="nav-toggle"><i class="fa fa-bars"></i></a>
+      <div class="nav-list">
+        <a href="#Dashboard">Dashboard</a>
+        <a href="#Statistics">Statistics</a>
+        <a href="#History">History</a>
+        <a href="/about.html">About</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- User -->
+  <div class="container-vertical user-input-section">
+    <p>Please enter your user ID</p>
+    <input type="text" value="2568">
+    <button id="user-input-button">Enter</button>
+  </div>
+
+  <!-- Content -->
+  <div class="container-vertical content-section hidden">
+    <!-- Dashboard -->
+    <section class="section-container" id="Dashboard">
+      <h4><i class="fa-solid fa-gauge"></i> Dashboard</h4>
+      <div class="container-horizontal">
+        <div class="card dashboard-card container-vertical" id="time-card">
+          <p id="now-day"></p>
+          <p id="now-date"></p>
+          <p id="now-time"></p>
+        </div>
+        <div class="card dashboard-card container-vertical" id="weather-card">
+          <p>
+            <i class="wi wi-thermometer"></i><span id="temperature"></span>
+          </p>
+          <p><i class="wi wi-humidity"></i><span id="humidity"></span></p>
+          <p id="weather-comment">Good weather?</p>
+        </div>
+        <div class="card dashboard-card container-vertical" id="action-card">
+          <p id="action-title">Current Action:</p>
+          <p id="current-action"></p>
         </div>
       </div>
     </section>
-
-    <!-- Content -->
-    <div class="container-vertical">
-      <!-- Dashboard -->
-      <section class="section-container" id="Dashboard">
-        <h4><i class="fa-solid fa-gauge"></i> Dashboard</h4>
-        <div class="container-horizontal">
-          <div class="card dashboard-card container-vertical" id="time-card">
-            <p id="now-day"></p>
-            <p id="now-date"></p>
-            <p id="now-time"></p>
-          </div>
-          <div class="card dashboard-card container-vertical" id="weather-card">
-            <p>
-              <i class="wi wi-thermometer"></i><span id="temperature"></span>
-            </p>
-            <p><i class="wi wi-humidity"></i><span id="humidity"></span></p>
-            <p id="weather-comment">Good weather?</p>
-          </div>
-          <div class="card dashboard-card container-vertical" id="action-card">
-            <p id="action-title">Current Action:</p>
-            <p id="current-action"></p>
-          </div>
-        </div>
-      </section>
-      <!-- Statistics -->
-      <section class="section-container" id="Statistics">
-        <h4><i class="fa-solid fa-database"></i> Statistics</h4>
-        <div class="container-horizontal">
-          <div
-            class="card statistics-card container-horizontal"
-            id="progress-card"
-          >
-            <div id="progress-container">
-              <p id="percent"></p>
-              <div id="progress-placer">
-                <div class="progress">
-                  <svg
-                    class="svg"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle class="back"></circle>
-                    <circle class="bar" data-value="0"></circle>
-                  </svg>
-                </div>
+    <!-- Statistics -->
+    <section class="section-container" id="Statistics">
+      <h4><i class="fa-solid fa-database"></i> Statistics</h4>
+      <div class="container-horizontal">
+        <div class="card statistics-card container-horizontal" id="progress-card">
+          <div id="progress-container">
+            <p id="percent"></p>
+            <div id="progress-placer">
+              <div class="progress">
+                <svg class="svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <circle class="back"></circle>
+                  <circle class="bar" data-value="0"></circle>
+                </svg>
               </div>
-              <p id="progress-title">CAL</p>
             </div>
-            <div id="progress-info" class="container-vertical">
-              <p id="progress-target">Target: <span></span> Cal</p>
-              <p id="progress-current">Current: <span></span> Cal</p>
-              <p id="progress-comment"></p>
-            </div>
+            <p id="progress-title">CAL</p>
           </div>
-          <div
-            class="card statistics-card heartbeat-container container-horizontal"
-          >
-            <div id="heartrate-container">
-              <i class="fa fa-heart"></i>
-              <p id="heartrate-number"></p>
-            </div>
-            <div id="heartrate-info" class="container-vertical">
-              <p id="heartrate-intensity">Intensity Level: <span></span></p>
-              <p id="heartrate-comment"></p>
-            </div>
+          <div id="progress-info" class="container-vertical">
+            <p id="progress-target">Target: <span></span> Cal</p>
+            <p id="progress-current">Current: <span></span> Cal</p>
+            <p id="progress-comment"></p>
           </div>
         </div>
-      </section>
-      <!-- History -->
-      <section class="section-container" id="History">
-        <h4><i class="fa-solid fa-clock-rotate-left"></i> History</h4>
-
-        <div class="card history-card">
-          <div class="chart-container">
-            <canvas id="history-chart" width="400" height="400"></canvas>
+        <div class="card statistics-card heartbeat-container container-horizontal">
+          <div id="heartrate-container">
+            <i class="fa fa-heart"></i>
+            <p id="heartrate-number"></p>
+          </div>
+          <div id="heartrate-info" class="container-vertical">
+            <p id="heartrate-intensity">Intensity Level: <span></span></p>
+            <p id="heartrate-comment"></p>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+    <!-- History -->
+    <section class="section-container" id="History">
+      <h4><i class="fa-solid fa-clock-rotate-left"></i> History</h4>
 
-    <!-- Script -->
-    <script src=".\JS\MQTTManager.js"></script>
-    <script src=".\JS\index.js"></script>
-  </body>
+      <div class="card history-card">
+        <div class="chart-container">
+          <canvas id="history-chart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Script -->
+  <script src=".\JS\MQTTManager.js"></script>
+  <script src=".\JS\index.js"></script>
+</body>
+
 </html>

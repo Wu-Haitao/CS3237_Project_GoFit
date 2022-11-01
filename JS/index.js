@@ -33,14 +33,12 @@ function RefreshDateTime() {
   let now = new Date();
   $('#now-day').text(dayNames[now.getDay()]);
   $('#now-date').text(
-    `${monthNames[now.getMonth()]} ${
-      now.getDate() < 10 ? '0' + now.getDate() : now.getDate()
+    `${monthNames[now.getMonth()]} ${now.getDate() < 10 ? '0' + now.getDate() : now.getDate()
     }, ${now.getFullYear()}`
   );
   let timeIcon = now.getHours() >= 6 && now.getHours() <= 18 ? '☀️' : '🌙';
   $('#now-time').text(
-    `${now.getHours() < 10 ? '0' + now.getHours() : now.getHours()} : ${
-      now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()
+    `${now.getHours() < 10 ? '0' + now.getHours() : now.getHours()} : ${now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()
     } ${now.getHours() <= 12 ? 'AM' : 'PM'} ${timeIcon}`
   );
 }
@@ -87,21 +85,32 @@ function RefreshHeartRate(heartRate) {
   }
 }
 
-function RefreshHistoryChart() {
+function RefreshHistoryChart(historicalData) {
   let ctx = $('#history-chart')[0].getContext('2d');
   let lineColor = getComputedStyle(document.documentElement).getPropertyValue(
     '--theme-color'
   );
+  let data = new Array();
+  let now = new Date();
+  today = now.getDay();
+  for (let i = 6; i > today; i--) {
+    data[i] = 0;
+  }
+  let index = 0;
+  for (let i = today; i >= 0; i--) {
+    data[i] = historicalData[index];
+    index++;
+  }
   let historyChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+      labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       datasets: [
         {
-          label: 'Cal',
+          label: 'Calorie',
           borderColor: lineColor,
           borderWidth: 2,
-          data: [1200, 1900, 300, 500, 200, 300, 900],
+          data: data,
         },
       ],
     },
@@ -111,8 +120,24 @@ function RefreshHistoryChart() {
   });
 }
 
+function UserInput() {
+  input = $('.user-input-section input').val();
+  $('.user-input-section').addClass('hidden');
+  $('.content-section').removeClass('hidden');
+
+  ConnectToMQTT(input)
+}
+
+function ConnectToMQTT(userid) {
+  let mqttClient = SetupMQTT(userid);
+  SendRequest(mqttClient, '1');
+  setInterval(SendRequest, 5000, mqttClient, '1');
+  SendRequest(mqttClient, '2')
+}
+
 $(document).ready(function () {
   $('#nav-toggle').click(ToggleNavbar);
+  $('#user-input-button').click(UserInput);
 
   RefreshDateTime();
   setInterval(RefreshDateTime, 5000);
@@ -121,10 +146,5 @@ $(document).ready(function () {
   RefreshAction(1);
   RefreshProgress(1600, 1200);
   RefreshHeartRate(90);
-
-  RefreshHistoryChart();
-
-  let mqttClient = SetupMQTT();
-  SendRequest(mqttClient);
-  setInterval(SendRequest, 5000, mqttClient);
+  RefreshHistoryChart([1200, 1900, 300, 500, 200, 300, 900]);
 });
