@@ -22,13 +22,13 @@ function RefreshDateTime() {
     'December',
   ];
   const dayNames = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday',
-    'Sunday',
+    'Saturday'
   ];
   let now = new Date();
   $('#now-day').text(dayNames[now.getDay()]);
