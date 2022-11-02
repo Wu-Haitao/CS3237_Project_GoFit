@@ -156,23 +156,22 @@ function GetNotificationPermission() {
   }
 }
 
-function SendNotification(msg) {
-  if (window.Notification && Notification.permission === "granted") {
-    let n = new Notification(msg);
-  }
-  else if (window.Notification && Notification.permission !== "denied") {
-    GetNotificationPermission()
-    if (window.Notification && Notification.permission === "granted") {
-      let n = new Notification(msg);
-    }
-  }
-}
+// function SendNotification(msg) {
+//   if (window.Notification && Notification.permission === "granted") {
+//     let n = new Notification(msg);
+//   }
+//   else if (window.Notification && Notification.permission !== "denied") {
+//     GetNotificationPermission()
+//     if (window.Notification && Notification.permission === "granted") {
+//       let n = new Notification(msg);
+//     }
+//   }
+// }
 
 $(document).ready(function () {
   $('#nav-toggle').click(ToggleNavbar);
   $('#user-input-button').click(UserInput);
 
-  GetNotificationPermission();
   RefreshDateTime();
   setInterval(RefreshDateTime, 5000);
   //Fake data
@@ -183,5 +182,28 @@ $(document).ready(function () {
   RefreshHistoryChart([1200, 1900, 300, 500, 200, 300, 900]);
 
   //Notifications
-  setInterval(SendWeatherNotificationStatus, 30000);
+  GetNotificationPermission();
+  SendWeatherNotificationStatus();
+  //setInterval(SendWeatherNotificationStatus, 30000);
 });
+
+navigator.serviceWorker.register('/sw.js').then(function (registration) {
+  console.log(registration)
+})
+
+let registration = self.registration
+
+function SendNotification(msg) {
+  GetNotificationPermission();
+  navigator.serviceWorker.getRegistration().then(function (registration) {
+    registration.showNotification(msg, {
+      title: 'GoFit'
+    })
+      .then(function () {
+        console.log('Notification sent!');
+      })
+      .catch(function (e) {
+        console.log('Error on sending notifications!');
+      })
+  })
+}
