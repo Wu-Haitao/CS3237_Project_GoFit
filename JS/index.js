@@ -43,9 +43,20 @@ function RefreshDateTime() {
   );
 }
 
+let global_temperature;
+let global_humidity;
+function SendWeatherNotificationStatus() {
+  const temperature_threshold = 28;
+  if (global_temperature >= temperature_threshold) {
+    SendNotification('Temperature is high, drink some water!');
+  }
+}
+
 function RefreshWeather(temperature, humidity) {
   $('#temperature').text(`${temperature} °C`);
   $('#humidity').text(`${humidity} %`);
+  global_temperature = temperature;
+  global_humidity = humidity;
 }
 
 function RefreshAction(actionIndex) {
@@ -135,16 +146,42 @@ function ConnectToMQTT(userid) {
   SendRequest(mqttClient, '2')
 }
 
+function GetNotificationPermission() {
+  if (window.Notification && Notification.permission !== "granted") {
+    Notification.requestPermission(function (status) {
+      if (Notification.permission !== status) {
+        Notification.permission = status
+      }
+    })
+  }
+}
+
+function SendNotification(msg) {
+  if (window.Notification && Notification.permission === "granted") {
+    let n = new Notification(msg);
+  }
+  else if (window.Notification && Notification.permission !== "denied") {
+    GetNotificationPermission()
+    if (window.Notification && Notification.permission === "granted") {
+      let n = new Notification(msg);
+    }
+  }
+}
+
 $(document).ready(function () {
   $('#nav-toggle').click(ToggleNavbar);
   $('#user-input-button').click(UserInput);
 
+  GetNotificationPermission();
   RefreshDateTime();
   setInterval(RefreshDateTime, 5000);
   //Fake data
-  RefreshWeather(26, 78);
-  RefreshAction(1);
-  RefreshProgress(1600, 1200);
-  RefreshHeartRate(90);
-  RefreshHistoryChart([1200, 1900, 300, 500, 200, 300, 900]);
+  // RefreshWeather(29, 78);
+  // RefreshAction(1);
+  // RefreshProgress(1600, 1200);
+  // RefreshHeartRate(90);
+  // RefreshHistoryChart([1200, 1900, 300, 500, 200, 300, 900]);
+
+  //Notifications
+  setInterval(SendWeatherNotificationStatus, 30000);
 });
