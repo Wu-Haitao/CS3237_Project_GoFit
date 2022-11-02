@@ -176,11 +176,11 @@ $(document).ready(function () {
   RefreshDateTime();
   setInterval(RefreshDateTime, 5000);
   //Fake data
-  // RefreshWeather(29, 78);
-  // RefreshAction(1);
-  // RefreshProgress(1600, 1200);
-  // RefreshHeartRate(90);
-  // RefreshHistoryChart([1200, 1900, 300, 500, 200, 300, 900]);
+  RefreshWeather(29, 78);
+  RefreshAction(1);
+  RefreshProgress(1600, 1200);
+  RefreshHeartRate(90);
+  RefreshHistoryChart([1200, 1900, 300, 500, 200, 300, 900]);
 
   //Notifications
   setInterval(SendWeatherNotificationStatus, 30000);
