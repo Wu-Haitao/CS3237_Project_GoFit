@@ -48,7 +48,7 @@ let global_humidity;
 function SendWeatherNotificationStatus() {
   const temperature_threshold = 28;
   if (global_temperature >= temperature_threshold) {
-    SendNotification('Temperature is high, drink some water!');
+    SendNotification('🌡 High temperature, drink some water!');
   }
 }
 
@@ -146,28 +146,6 @@ function ConnectToMQTT(userid) {
   SendRequest(mqttClient, '2')
 }
 
-function GetNotificationPermission() {
-  if (window.Notification && Notification.permission !== "granted") {
-    Notification.requestPermission(function (status) {
-      if (Notification.permission !== status) {
-        Notification.permission = status
-      }
-    })
-  }
-}
-
-// function SendNotification(msg) {
-//   if (window.Notification && Notification.permission === "granted") {
-//     let n = new Notification(msg);
-//   }
-//   else if (window.Notification && Notification.permission !== "denied") {
-//     GetNotificationPermission()
-//     if (window.Notification && Notification.permission === "granted") {
-//       let n = new Notification(msg);
-//     }
-//   }
-// }
-
 $(document).ready(function () {
   $('#nav-toggle').click(ToggleNavbar);
   $('#user-input-button').click(UserInput);
@@ -184,8 +162,18 @@ $(document).ready(function () {
   //Notifications
   GetNotificationPermission();
   SendWeatherNotificationStatus();
-  //setInterval(SendWeatherNotificationStatus, 30000);
+  setInterval(SendWeatherNotificationStatus, 30000);
 });
+
+function GetNotificationPermission() {
+  if (window.Notification && Notification.permission !== "granted") {
+    Notification.requestPermission(function (status) {
+      if (Notification.permission !== status) {
+        Notification.permission = status
+      }
+    })
+  }
+}
 
 navigator.serviceWorker.register('/sw.js').then(function (registration) {
   console.log(registration)
@@ -196,8 +184,9 @@ let registration = self.registration
 function SendNotification(msg) {
   GetNotificationPermission();
   navigator.serviceWorker.getRegistration().then(function (registration) {
-    registration.showNotification(msg, {
-      title: 'GoFit'
+    registration.showNotification('GoFit', {
+      body: msg,
+      vibrate: [200, 100, 200, 100, 200, 100, 200]
     })
       .then(function () {
         console.log('Notification sent!');
