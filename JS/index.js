@@ -60,7 +60,7 @@ function RefreshWeather(temperature, humidity) {
 }
 
 function RefreshAction(actionIndex) {
-  const actionNames = ['Sitting 🪑', 'Walking 🚶‍♂️', 'Running 🏃‍♂️'];
+  const actionNames = ['Standing 🧍‍♂️', 'Sitting 🪑', 'Walking 🚶‍♂️', 'Running 🏃‍♂️'];
   $('#current-action').text(actionNames[actionIndex]);
 }
 
@@ -185,8 +185,7 @@ function SendNotification(msg) {
   GetNotificationPermission();
   navigator.serviceWorker.getRegistration().then(function (registration) {
     registration.showNotification('GoFit', {
-      body: msg,
-      vibrate: [200, 100, 200, 100, 200, 100, 200]
+      body: msg
     })
       .then(function () {
         console.log('Notification sent!');
