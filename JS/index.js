@@ -144,7 +144,7 @@ function ConnectToMQTT(userid) {
   let mqttClient = SetupMQTT(userid);
   SendRequest(mqttClient, '1');
   setInterval(SendRequest, 5000, mqttClient, '1');
-  SendRequest(mqttClient, '2')
+  SendRequest(mqttClient, userid)
 }
 
 $(document).ready(function () {
