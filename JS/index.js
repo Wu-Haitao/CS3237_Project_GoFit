@@ -61,7 +61,7 @@ function RefreshWeather(temperature, humidity) {
 }
 
 function RefreshAction(actionIndex) {
-  const actionNames = ['Standing 🧍‍♂️', 'Sitting 🪑', 'Walking 🚶‍♂️', 'Running 🏃‍♂️'];
+  const actionNames = ['Standing 🧍‍♂️', 'Sitting 🪑', 'Walking 🚶‍♂️', 'Running 🏃‍♂️', 'Jumping 🦘'];
   $('#current-action').text(actionNames[actionIndex]);
 }
 
