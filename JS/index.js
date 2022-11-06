@@ -102,26 +102,46 @@ function RefreshHeartRate(heartRate) {
   }
 }
 
-function RefreshHistoryChart(historicalData) {
+function RefreshHistoryChart(historicalData, standData, sitData, walkData, runData) {
   let ctx = $('#history-chart')[0].getContext('2d');
   let lineColor = getComputedStyle(document.documentElement).getPropertyValue(
     '--theme-color'
   );
-  let data = new Array();
   let now = new Date();
   today = now.getDay();
+  
+  let labels = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  labels = labels.slice(today+1, 7).concat(labels.slice(0, today+1));
+
+  today = 6;
+
+  let data = new Array();
+  let stand = new Array();
+  let sit = new Array();
+  let walk = new Array();
+  let run = new Array();
   for (let i = 6; i > today; i--) {
     data[i] = 0;
+    stand[i] = 0;
+    sit[i] = 0;
+    walk[i] = 0;
+    run[i] = 0;
   }
   let index = 0;
   for (let i = today; i >= 0; i--) {
     data[i] = historicalData[index];
+    stand[i] = standData[index];
+    sit[i] = sitData[index];
+    walk[i] = walkData[index];
+    run[i] = runData[index];
     index++;
   }
+
+
   let historyChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      labels: labels,
       datasets: [
         {
           label: 'Calorie',
@@ -129,6 +149,30 @@ function RefreshHistoryChart(historicalData) {
           borderWidth: 2,
           data: data,
         },
+        {
+          label: 'Stand',
+          borderColor: '#96bfff',
+          borderWidth: 2,
+          data: stand,
+        },
+        {
+          label: 'Sit',
+          borderColor: '#8cedbb',
+          borderWidth: 2,
+          data: sit,
+        },
+        {
+          label: 'Walk',
+          borderColor: '#f7df86',
+          borderWidth: 2,
+          data: walk,
+        },
+        {
+          label: 'Run',
+          borderColor: '#f59089',
+          borderWidth: 2,
+          data: run,
+        }
       ],
     },
     options: {

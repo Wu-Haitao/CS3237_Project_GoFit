@@ -68,7 +68,7 @@ function HandelMQTTMessage(message) {
 
 function HandelMQTTMessageHistorical(message) {
   let data = JSON.parse(message);
-  RefreshHistoryChart(data.history);
+  RefreshHistoryChart(data.history, data.stand, data.sit, data.walk, data.run);
 }
 
 function SendRequest(client, msg) {
