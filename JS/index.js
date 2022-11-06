@@ -49,10 +49,11 @@ function SendWeatherNotificationStatus() {
   const temperature_threshold = 28;
   const humidity_threshold = 75;
   if ((global_temperature >= temperature_threshold) && (global_humidity >= humidity_threshold)) {
-    SendNotification('🌡 High temperature & humidity, drink some water!');
+    SendNotification('🔥 High temperature & humidity, drink some water!');
     setTimeout(SendWeatherNotificationStatus, 10000);
   }
   else {
+    SendNotification('💦 Drink some water!');
     setTimeout(SendWeatherNotificationStatus, 30000);
   }
 }
