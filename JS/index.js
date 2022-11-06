@@ -50,6 +50,10 @@ function SendWeatherNotificationStatus() {
   const humidity_threshold = 75;
   if ((global_temperature >= temperature_threshold) && (global_humidity >= humidity_threshold)) {
     SendNotification('🌡 High temperature & humidity, drink some water!');
+    setTimeout(SendWeatherNotificationStatus, 10000);
+  }
+  else {
+    setTimeout(SendWeatherNotificationStatus, 30000);
   }
 }
 
@@ -162,7 +166,7 @@ $(document).ready(function () {
   //Notifications
   GetNotificationPermission();
   SendWeatherNotificationStatus();
-  setInterval(SendWeatherNotificationStatus, 30000);
+  //setInterval(SendWeatherNotificationStatus, 30000);
 });
 
 function GetNotificationPermission() {
